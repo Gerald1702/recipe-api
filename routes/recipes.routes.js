@@ -1,29 +1,25 @@
 import { Router } from "express";
+import { addRecipe, deleteSingleUpdate, getRecipe, getSingleRecipe, updateRecipe } from "../controllers/recipes.controller.js";
+import multer from "multer";
+
+// Create multer upload middleware
+const upload = multer({dest:'uploads/images' });
 
 
+//Create recipes router
 const router = Router();
 
-//Dfine routes
+//Define routes
 
-router.post("/recipes", (req, res) => {
-    res.send("Create a new recipe!");
- });
+router.post('/', upload.single('image'), addRecipe);
 
-router.get('/recipes', async (req, res) => {
-    res.send("Get all recipes!");
- });
+router.get('/', getRecipe);
 
- router.get('/recipes/:id', (req, res) => {
-    res.send(`Get single recipes: ${req.params.id}`);
-});
+ router.get('/:id', getSingleRecipe);
 
-router.patch('/recipes/:id', (req, res) => {
-    res.send (`Update single recipes: ${req.params.id}`);
-} );
+router.patch('/:id', updateRecipe );
 
-router.delete('/recipes/:id', (req, res) => {
-res.send(`Delete single recipes: ${req.params.id}`)
-});
+router.delete('/:id', deleteSingleUpdate);
 
 //Export Routes
 export default router;

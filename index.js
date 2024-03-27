@@ -1,29 +1,30 @@
 import express from  'express';
-import cors from  "cors";
-import bodyParser from "body-parser";
+import cors from 'cors';
 import recipes from './routes/recipes.routes.js';
 import mongoose from 'mongoose';
 import dotenv from  'dotenv';
 
 //load env variables
-// dotenv.config();
+dotenv.config();
 
 //create express app
 const app = express();
 
-app.use(bodyParser.json());
+//Apply middlewares
+app.use(express.json());
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
+app.use(express.static('uploads'));
 
 //load routes
-app.use(recipes);
+app.use('/recipes', recipes);
 
 // Make database connection
  await mongoose.connect(process.env.MONGO_URI);
 
 
 //listen for request
-app.listen(6000,() => {
+app.listen(4000,() => {
     console.log("Server is running on port");
 });
 
