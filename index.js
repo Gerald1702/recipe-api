@@ -24,7 +24,8 @@ app.use('/recipes', recipes);
 
 
 //listen for request
-app.listen(4000,() => {
-    console.log("Server is running on port");
+const  PORT = process.env.PORT ||  4000;
+app.listen(PORT,() => {
+    console.log(`Server is running on ${PORT}`);
 });
 
